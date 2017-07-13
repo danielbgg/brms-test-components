@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+  <profiles>
+    <!-- Profile with online repositories required by BRMS/BPMS -->
+    <profile>
+      <id>brms-bpms-online-profile</id>
+      <repositories>
+        <repository>
+          <id>jboss-ga-repository</id>
+          <url>https://maven.repository.redhat.com/ga/</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </repository>
+        <repository>
+          <id>guvnor-m2-repo</id>
+          <url>http://localhost:8080/business-central/maven2/</url>
+	  <releases>
+         	<enabled>true</enabled>
+         </releases>
+         <snapshots>
+           	<enabled>true</enabled>
+           	<updatePolicy>always</updatePolicy>
+         </snapshots> 
+	</repository>
+      </repositories>
+      <pluginRepositories>
+        <pluginRepository>
+          <id>jboss-ga-plugin-repository</id>
+          <url>https://maven.repository.redhat.com/ga/</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>
+  </profiles>
+
+  <servers>
+    <!-- Configuring pre-emptive authentication for the repository server 
+    <server>
+      <id>brms-bpms-m2-repo</id>
+      <username>brmsAdmin</username>
+      <password>redhat!123</password>
+      <configuration>
+        <wagonProvider>httpclient</wagonProvider>
+        <httpConfiguration>
+          <all>
+            <usePreemptive>true</usePreemptive>
+          </all>
+        </httpConfiguration>
+      </configuration>
+    </server>
+-->
+    <!-- Alternative to enabling pre-emptive authentication - configuring
+         the Authorization HTTP header with Base64-encoded credentials
+    <server>
+      <id>brms-bpms-m2-repo</id>
+      <configuration>
+        <httpHeaders>
+          <property>
+            <name>Authorization</name>
+            <value>Basic YWRtaW46YWRtaW4=</value>
+          </property>
+        </httpHeaders>
+      </configuration>
+    </server>
+    -->
+  </servers>
+
+  <activeProfiles>
+    <!-- Activation of the BRMS/BPMS profile -->
+    <activeProfile>brms-bpms-online-profile</activeProfile>
+  </activeProfiles>
+
+</settings>

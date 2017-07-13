@@ -1,0 +1,83 @@
+package calculadora
+
+import br.com.danielbgg.*;
+import java.util.LinkedList;
+
+rule "regraCOLLECT"
+no-loop 
+
+    when
+        //conditions
+        town : Town( name == 'Paris' )
+        mothers : LinkedList() from collect ( Person (gender=="F", children > 0) from town.getPeople() )
+    then
+        //actions
+        System.out.println("[COLLECT] Maes encontradas: " + mothers.size());
+        for (int i=0; i<mothers.size(); i++) {
+	        System.out.println("[COLLECT] Mae: " + mothers.get(i));
+        }
+
+end
+
+
+rule "regraFROM"
+no-loop 
+
+    when
+        //conditions
+        order : Order()
+		item : OrderItem(value > 100) from order.items
+    then
+        //actions
+        //System.out.println("[FROM] Item encontrado: " + item);
+
+end
+
+rule "regraFORALL"
+no-loop 
+
+    when
+        //conditions
+        order: Order()
+	    
+		forall (
+			  item : OrderItem($v: value) from order.items
+				 )
+    then
+        //actions
+        System.out.println("[FORALL] Nem todos os items tem valor maior que 100...");
+
+end
+
+
+rule "regraACCUMULATE1"
+no-loop 
+
+    when
+        //conditions
+        $order: Order()
+        $total : Number( )
+        	from accumulate ( OrderItem ($value : value), sum ($value))
+    then
+        //actions
+        System.out.println("[ACCUMULATE1] Total: " + $total);
+
+end
+
+rule "regraACCUMULATE2"
+no-loop 
+
+    when
+        //conditions
+        $order: Order()
+        $total : Number( doubleValue > 1000 )
+        	from accumulate ( OrderItem ($value : value), 
+        		init (double total = 0;),
+        		action (total += $value;),
+        		reverse (total -= $value;),
+        		result (total))
+    then
+        //actions
+        System.out.println("[ACCUMULATE2] Total: " + $total);
+
+end

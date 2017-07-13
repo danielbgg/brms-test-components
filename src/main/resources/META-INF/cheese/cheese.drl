@@ -1,0 +1,77 @@
+package calculadora
+
+import br.com.danielbgg.*;
+
+global java.util.List results;
+
+function float weightedAverage(long num1, long num2, long div1, long div2) {
+	return (num1 + num2)/(div1 + div2);
+}
+
+rule "regraEVAL"
+no-loop 
+
+    when
+        //conditions
+        ob1 : Observation()
+		ob2 : Observation(this != ob1)
+		eval( (weightedAverage(ob1.val,ob2.val,ob1.per,ob2.per) ) < 10)
+    then
+        //actions
+        System.out.println("[EVAL] Encontrado combinacao: ");
+
+end
+
+rule "regraAND"
+no-loop 
+
+    when
+        //conditions
+        $c: Cheese ( cheeseType : type )
+        $p: Person ( favoriteCheese == cheeseType)
+    then
+        //actions
+        System.out.println("[AND] Encontrado combinacao: " + $c + " - " + $p);
+
+end
+
+rule "regraOR"
+no-loop 
+
+    when
+        //conditions
+        Person ( favoriteCheese == "parmesao") or 
+        Mouse ( favoriteCheese == "parmesao")  
+    then
+        //actions
+        System.out.println("[OR] Encontrado combinacao: ");
+
+end
+
+rule "regraEXISTS"
+no-loop 
+
+    when
+        //conditions
+        $c: Cheese ( cheeseType : type )
+        $p: Person ( favoriteCheese == cheeseType)
+        exists (Person ( favoriteCheese == "prato"))
+    then
+        //actions
+        System.out.println("[EXISTS] Encontrado combinacao: " + $c + " - " + $p);
+
+end
+
+rule "regraNOT"
+no-loop 
+
+    when
+        //conditions
+        $c: Cheese ( cheeseType : type )
+        $p: Person ( favoriteCheese == cheeseType)
+        not (Person ( favoriteCheese == "prato"))
+    then
+        //actions
+        System.out.println("[NOT] Encontrado combinacao: " + $c + " - " + $p);
+
+end

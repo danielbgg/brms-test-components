@@ -1,0 +1,15 @@
+package calculadora
+
+import br.com.danielbgg.*;
+
+rule "regra1"
+no-loop 
+
+    when
+        //conditions
+        $carrinho : CarrinhoDeCompra()
+    then
+        //actions
+        System.out.println("Encontrado novo carrinho de compras! " + $carrinho);
+
+end
