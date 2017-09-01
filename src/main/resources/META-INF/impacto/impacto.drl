@@ -1,0 +1,40 @@
+package calculadora
+
+import br.com.danielbgg.impacto.*;
+
+rule "regra1"
+no-loop 
+
+    when
+        $c : Calculo()
+        $r : Recebimento()
+    then
+        $c.set_totalReceb( $c.get_totalReceb() + $r.getRecebimento());
+        System.out.println("TOTAL regra1: " + $c.get_totalReceb());
+        //update($c);
+        //retract($r);
+    end
+
+    
+rule "regra2"
+no-loop 
+    
+    when
+        $c : Calculo()
+        $total : Number() from accumulate ( Recebimento($r : recebimento), sum($r) )
+    then
+        System.out.println("TOTAL regra2: " + $total);
+    end    
+    
+    
+rule "regra3"
+no-loop 
+    
+    when
+        $c : Calculo()
+        $total : Double() from accumulate (Recebimento($r : recebimento) from $c.recebimentos, sum($r)) 
+    then
+        System.out.println("TOTAL regra3: " + $total);
+        $c.set_totalReceb($total); 
+    end    
+    

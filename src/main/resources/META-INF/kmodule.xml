@@ -13,5 +13,13 @@
 	<kbase name="order" packages="order">
 		<ksession name="OrderSession" />
 	</kbase>
+	
+	<kbase name="impacto" packages="impacto">
+		<ksession name="ImpactoSession" />
+	</kbase>
+	
+	<kbase name="alcada" packages="alcada">
+		<ksession name="AlcadaSession" />
+	</kbase>
 
 </kmodule>
